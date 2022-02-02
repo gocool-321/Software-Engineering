@@ -1,15 +1,15 @@
 import './App.css';
-import Homepage from './pages/homePage';
-import Page from './pages/page';
 import { useAuth0 } from "@auth0/auth0-react"
-import Dashboard from './pages/DashBoard';
+import NavBar from './components/navBar';
+import React from 'react';
+import HomePage from './components/HomePage';
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
   return (
-    <Page>
-      {isLoading ? <Homepage /> : <div>
-        {isAuthenticated ? <Dashboard /> : <Homepage />}</div>}
-    </Page>
+    <React.Fragment>
+      <NavBar />
+      <HomePage />
+    </React.Fragment>
   );
 }
 

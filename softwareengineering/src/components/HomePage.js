@@ -1,43 +1,38 @@
 import React from 'react'
-import img1 from "./assets/img/01.jpg"
-import img2 from "./assets/img/02.jpg"
-import img3 from "./assets/img/03.jpg"
-import { useAuth0 } from "@auth0/auth0-react";
-export default function Homepage() {
-    const { loginWithRedirect, user } = useAuth0();
-    console.log(user)
+import img1 from "../img/01.jpg"
+import img2 from "../img/02.jpg"
+import img3 from "../img/03.jpg"
+import background from "../img/Background.svg"
+import jQueryCode from '../functions/jQueryCode'
+
+export default function HomePage() {
     return <div>
-        <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark navbar-custom">
-            <div class="container"><a class="navbar-brand" href="#">TO-DO</a><button data-bs-toggle="collapse"
-                class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle
-                    navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#" onClick={loginWithRedirect}>Sign Up</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#" onClick={loginWithRedirect}>Log In</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <header class="text-center text-white masthead">
-            <div class="masthead-content">
+
+        <header class="text-center masthead  text-white "
+            style={{
+                backgroundImage: `url(${background})`,
+                height: "100vh",
+                width: "100vw",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+            <div class="masthead-content" style={{
+
+            }}>
                 <div class="container">
-                    <h1 class="masthead-heading mb-0">TO-DO List</h1>
-                    <h2 class="masthead-subheading mb-0">Make life simpler</h2><a
-                        class="btn btn-primary btn-xl rounded-pill mt-5" role="button" href="#">Get started</a>
+                    <h1 class="masthead-heading mb-0 display-1">TODO List</h1>
+                    <h1>Make work <span id="words">Simpler🙃</span></h1>
+                    <a class="btn btn-primary btn-xl rounded-pill mt-5" role="button" href="#">Get started</a>
                 </div>
             </div>
-            <div class="bg-circle-1 bg-circle"></div>
-            <div class="bg-circle-2 bg-circle"></div>
-            <div class="bg-circle-3 bg-circle"></div>
-            <div class="bg-circle-4 bg-circle"></div>
         </header>
         <section>
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 order-lg-2">
                         <div class="p-5"><img class="rounded-circle img-fluid"
-                            src={img1} /></div>
+                            src={img3} /></div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
@@ -55,7 +50,7 @@ export default function Homepage() {
                 <div class="row align-items-center">
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5"><img class="rounded-circle img-fluid"
-                            src={img2} /></div>
+                            src={img1} /></div>
                     </div>
                     <div class="col-lg-6 order-lg-2">
                         <div class="p-5">
@@ -73,7 +68,7 @@ export default function Homepage() {
                 <div class="row align-items-center">
                     <div class="col-lg-6 order-lg-2">
                         <div class="p-5"><img class="rounded-circle img-fluid"
-                            src={img3} /></div>
+                            src={img2} /></div>
                     </div>
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-5">
@@ -91,5 +86,10 @@ export default function Homepage() {
                 <p class="text-center text-white m-0 small">Copyright&nbsp;© Brand 2022</p>
             </div>
         </footer>
+        <script type="text/javascript">
+            {jQueryCode}
+        </script>
+
     </div>
+
 }

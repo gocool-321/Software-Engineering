@@ -8,6 +8,6 @@ export default function RoutePatterns() {
     return <switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/dashboard" exact component={DashBoard} />
-        <Route path="/kanban" exact component={Kanban} />
+        <Route path="/kanban/:id" exact component={(vals) => <Kanban vals={vals} />} />
     </switch>
 }

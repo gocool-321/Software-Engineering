@@ -5,7 +5,6 @@ import React from 'react';
 import RoutePatterns from './Routes.js'
 
 function App() {
-  const { isAuthenticated } = useAuth0();
   return (
     <React.Fragment>
       <NavBar />

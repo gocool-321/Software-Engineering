@@ -2,6 +2,7 @@ import { Route } from "react-router-dom";
 import HomePage from './components/HomePage';
 import DashBoard from './components/DashBoard';
 import Kanban from "./components/kanban";
+import Ruff from "./components/ruff";
 
 export default function RoutePatterns() {
     return <switch>

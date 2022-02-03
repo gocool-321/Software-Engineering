@@ -7,6 +7,7 @@ import jQueryCode from '../functions/jQueryCode'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Redirect } from 'react-router-dom'
 import Loading from "./Loading"
+import Footer from './Footer'
 
 export default function HomePage() {
     const { isAuthenticated, isLoading } = useAuth0()
@@ -27,7 +28,7 @@ export default function HomePage() {
                     }}>
                         <div class="container">
                             <h1 class="masthead-heading mb-0 display-1">TODO List</h1>
-                            <h1>Make work <span id="words">Simpler🙃</span></h1>
+                            <h1>Make workflow <span id="words">Simpler🙃</span></h1>
                             <a class="btn btn-primary btn-xl rounded-pill mt-5" role="button" >Get started</a>
                         </div>
                     </div>
@@ -86,11 +87,7 @@ export default function HomePage() {
                             </div>
                         </div>
                     </section>
-                    <footer class="py-5 bg-black">
-                        <div class="container">
-                            <p class="text-center text-white m-0 small">Copyright&nbsp;© Brand 2022</p>
-                        </div>
-                    </footer>
+                    <Footer />
                     <script type="text/javascript">
                         {jQueryCode}
                     </script>

@@ -29,11 +29,11 @@ export default function HomePage() {
                         <div class="container">
                             <h1 class="masthead-heading mb-0 display-1">TODO List</h1>
                             <h1>Make workflow <span id="words">Simpler🙃</span></h1>
-                            <a class="btn btn-primary btn-xl rounded-pill mt-5" role="button" >Get started</a>
+                            <a class="btn btn-primary btn-xl rounded-pill mt-5" role="button" href="#tags" >Get started</a>
                         </div>
                     </div>
                 </header>
-                    <section>
+                    <section id="tags">
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-lg-6 order-lg-2">

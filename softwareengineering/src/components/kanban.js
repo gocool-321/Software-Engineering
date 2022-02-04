@@ -50,21 +50,22 @@ export default function Kanban(props) {
 
     return (
         < div className="App" >
-            {console.log(API)}
-            {console.log(user)}
 
             {isLoading ? <Loading /> : isAuthenticated ? (loader ? <Loading /> : <Board
                 style={{
                     backgroundColor: '#1572A1',
-                    textAlign: "center",
-                    // height: 
+                    Padding: "1rem",
                 }}
-                className="d-flex justify-content-center align-items-center"
+                className="d-flex"
                 data={kanbanSheet}
                 draggable
-                laneDraggable={false}
+                laneDraggable
+                collapsibleLanes
                 editable
+                canAddLanes
+                editLaneTitle
                 onDataChange={(data) => { getData(data) }}
+
             />
             ) : <Redirect to="/" exact />
             }

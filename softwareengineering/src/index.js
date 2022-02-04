@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter } from 'react-router-dom';
+// import creds from "./creds"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const client_id = process.env.REACT_APP_CLIENTID

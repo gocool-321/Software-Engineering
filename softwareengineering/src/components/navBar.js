@@ -1,26 +1,39 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import logo from "../img/logo.svg"
+import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap"
+import { Redirect } from 'react-router-dom'
 
 export default function NavBar() {
     const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0()
-    return <nav class="navbar navbar-dark navbar-expand-lg bg-dark navbar-custom">
-        <div class="container">
-            <NavLink class="navbar-brand" to="/">TODO</NavLink><button data-bs-toggle="collapse"
-                class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle
-                    navigation</span><span class="navbar-toggler-icon"></span></button>
-            {
-                isAuthenticated ? <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" onClick={logout} href="#">Sign Out</a></li>
-                    </ul>
-                </div> : <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" onClick={loginWithRedirect} href="#">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link" onClick={loginWithRedirect} href="#">Sign Up</a></li>
-                    </ul>
-                </div>
-            }
-        </div>
-    </nav >
+    return <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+            <Navbar.Brand href="#" onClick={() => <Redirect to="/" />}>
+                <img
+                    src={logo}
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top"
+                    alt="Todo App"
+                />{' '}
+                TODO
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+                <Nav className="me-auto">
+                </Nav>
+                {
+                    isAuthenticated ? <Nav>
+                        <Nav.Link href="#" onClick={logout}>signout</Nav.Link>
+                    </Nav> : <Nav>
+                        <Nav.Link href="#" onClick={loginWithRedirect}>Login</Nav.Link>
+                        <Nav.Link eventKey={2} href="#" onClick={loginWithRedirect}>
+                            signup
+                        </Nav.Link>
+                    </Nav>
+                }
+
+            </Navbar.Collapse>
+        </Container>
+    </Navbar>
 }

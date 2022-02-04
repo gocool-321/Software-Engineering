@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import data from "./data";
 import axios from "axios"
 
 import Board from "react-trello";
-import today from "../functions/getDate"
 import Loading from "./Loading";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Redirect } from "react-router-dom";
+// import creds from "../creds"
 
 
 

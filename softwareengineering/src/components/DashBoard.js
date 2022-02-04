@@ -4,9 +4,11 @@ import { NavLink, Redirect } from 'react-router-dom'
 import axios from "axios"
 import { v4 } from "uuid"
 import Footer from './Footer'
+import background from "../img/BG.jpg"
 import Loading from './Loading'
 import NewKanban from './form'
 import data from "./data"
+import "../CSS/dashboard.css"
 // import creds from "../creds"
 
 
@@ -34,7 +36,6 @@ export default function DashBoard() {
             setKanbans([])
         }
         setLoading(false)
-        console.log("Running...")
     }
 
     async function postDataOfuser(data) {
@@ -62,7 +63,6 @@ export default function DashBoard() {
                 newState[i] = kanbans[i]
             }
         }
-        // console.log(newState)
         setKanbans(newState)
         putDataOfuser(newState)
     }
@@ -79,43 +79,49 @@ export default function DashBoard() {
 
 
     if (!isAuthenticated) return <Redirect to="/" exact />
-    return <div>
-        <div style={{ width: "100vw", height: "auto", textAlign: "center" }}>
-            <div className="form-floating mb-3" style={{ margin: "1rem", padding: "0px" }}>
-                <h1 style={{ margin: "0px", width: "auto" }}>Welcome {user.name}</h1>
-                <div style={{ textAlign: "center", margin: "2rem" }}>
-                    <a className="btn btn-primary btn-lg" role="button" href="#" onClick={addNewKanban} data-bs-toggle="modal">Add board</a>
+    return <div className="parent" style={{ marginTop: "0px" }}>
+        <div className="background" style={{ height: "100vh" }}>
+            <div style={{ width: "100vw", height: "auto", textAlign: "center" }}>
+                <div className="form-floating mb-3" style={{ marginBottom: "1rem", padding: "2rem" }}>
+                    <h1 style={{ margin: "0px", width: "auto" }}>Welcome {user.name}</h1>
+                    <div style={{ textAlign: "center", margin: "2rem" }}>
+                        <a className="btn btn-primary btn-lg" role="button" href="#" onClick={addNewKanban} data-bs-toggle="modal">Add board</a>
+                    </div>
+                    {formvisible && <NewKanban formId={v4()} getValueFromForm={getValueFromForm} toggleForm={toggleForm} />}
+                    {loading ? <Loading /> : <div>
+                        <section
+                            className="d-flex justify-content-center align-items-center justify-content-md-center align-items-md-center"
+                            style={{ margin: '0px', padding: "0px" }}>
+
+                            <div class="d-md-flex justify-content-md-center align-items-md-center"
+                                style={{ marginTop: "2rem" }}>
+                                <ul className="list-group" style={{ width: "60vw" }}>
+                                    {Object.keys(kanbans).map((todo) => {
+                                        return <li className="list-group-item" style={{ width: "100%" }}>
+                                            <div className="container"
+                                                style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                                <NavLink
+                                                    to={`kanban/${todo}/${kanbans[todo].name}`} >
+                                                    <span>{kanbans[todo].name}</span>
+                                                </NavLink>
+                                                <button class="btn btn-danger" type="button" onClick={() => handleDelete(todo)}>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </li>
+                                    }
+                                    )}
+                                </ul>
+                            </div>
+
+                        </section>
+                    </div>}
                 </div>
-                {formvisible && <NewKanban formId={v4()} getValueFromForm={getValueFromForm} toggleForm={toggleForm} />}
-                {loading ? <Loading /> : <div>
-                    <section
-                        className="d-flex justify-content-center align-items-center justify-content-md-center align-items-md-center"
-                        style={{ margin: '0px', padding: "0px" }}>
-
-                        <div class="d-md-flex justify-content-md-center align-items-md-center"
-                            style={{ marginTop: "2rem" }}>
-                            <ul className="list-group" style={{ width: "60vw" }}>
-                                {Object.keys(kanbans).map((todo) => {
-                                    return <li className="list-group-item" style={{ width: "100%" }}>
-                                        <div className="container"
-                                            style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                                            <NavLink
-                                                to={`kanban/${todo}/${kanbans[todo].name}`} >
-                                                <span>{kanbans[todo].name}</span>
-                                            </NavLink>
-                                            <button class="btn btn-danger" type="button" onClick={() => handleDelete(todo)}>
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </li>
-                                }
-                                )}
-                            </ul>
-                        </div>
-
-                    </section>
-                </div>}
             </div>
+        </div >
+        <div className='footer'>
+            <Footer />
         </div>
-    </div >
+    </div>
+
 }

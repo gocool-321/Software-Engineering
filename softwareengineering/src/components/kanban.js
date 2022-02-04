@@ -57,6 +57,7 @@ export default function Kanban(props) {
                 style={{
                     backgroundColor: '#1572A1',
                     textAlign: "center",
+                    // height: 
                 }}
                 className="d-flex justify-content-center align-items-center"
                 data={kanbanSheet}

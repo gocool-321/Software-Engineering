@@ -23,7 +23,7 @@ export default function NavBar() {
                 <Nav className="me-auto">
                 </Nav>
                 {
-                    isAuthenticated ? <Nav>
+                    isLoading ? <div /> : isAuthenticated ? <Nav>
                         <Nav.Link href="#" onClick={logout}>signout</Nav.Link>
                     </Nav> : <Nav>
                         <Nav.Link href="#" onClick={loginWithRedirect}>Login</Nav.Link>

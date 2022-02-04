@@ -3,7 +3,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 export default function NavBar() {
-    const { loginWithRedirect, isAuthenticated, logout } = useAuth0()
+    const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0()
     return <nav class="navbar navbar-dark navbar-expand-lg bg-dark navbar-custom">
         <div class="container">
             <NavLink class="navbar-brand" to="/">TODO</NavLink><button data-bs-toggle="collapse"

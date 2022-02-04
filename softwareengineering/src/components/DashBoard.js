@@ -26,12 +26,25 @@ export default function DashBoard() {
         setLoading(true)
         const endPoint = `${API}/${user.sub}/.json`
         const Boards = await axios.get(endPoint)
-        setKanbans(Boards.data)
+        if (Boards.data) {
+            setKanbans(Boards.data)
+        } else {
+            setKanbans([])
+        }
         setLoading(false)
         console.log("Running...")
     }
 
     async function postDataOfuser(data) {
+        setLoading(true)
+        const endPoint = `${API}/${user.sub}/.json`
+        const Response = await axios.patch(endPoint, data)
+        setKanbans(data)
+        setLoading(false)
+        return Response
+    }
+
+    async function putDataOfuser(data) {
         setLoading(true)
         const endPoint = `${API}/${user.sub}/.json`
         const Response = await axios.put(endPoint, data)
@@ -40,6 +53,17 @@ export default function DashBoard() {
         return Response
     }
 
+    function handleDelete(todoId) {
+        const newState = {}
+        for (let i in kanbans) {
+            if (i != todoId) {
+                newState[i] = kanbans[i]
+            }
+        }
+        // console.log(newState)
+        setKanbans(newState)
+        putDataOfuser(newState)
+    }
 
     function getValueFromForm(value) {
         const newKanban = {
@@ -65,15 +89,30 @@ export default function DashBoard() {
                     <section
                         className="d-flex justify-content-center align-items-center justify-content-md-center align-items-md-center"
                         style={{ margin: '0px', padding: "0px" }}>
-                        <ul className="list-group">
-                            {Object.keys(kanbans).map((todo) => {
-                                return <li key={todo} className="list-group-item"><NavLink to={`kanban/${todo}`}><span>{kanbans[todo].name}</span></NavLink></li>
-                            }
-                            )}
-                        </ul>
+
+                        <div class="d-md-flex justify-content-md-center align-items-md-center"
+                            style={{ marginTop: "2rem" }}>
+                            <ul className="list-group" style={{ width: "100vh" }}>
+                                {Object.keys(kanbans).map((todo) => {
+                                    return <li className="list-group-item">
+                                        <div className="container d-md-flex justify-content-evenly align-items-start align-items-md-center">
+                                            <NavLink
+                                                to={`kanban/${todo}/${kanbans[todo].name}`} >
+                                                <span>{kanbans[todo].name}</span>
+                                            </NavLink>
+                                            <button class="btn btn-danger" type="button" onClick={() => handleDelete(todo)}>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </li>
+                                }
+                                )}
+                            </ul>
+                        </div>
+
                     </section>
                 </div>}
             </div>
         </div>
-    </div>
+    </div >
 }

@@ -1,58 +1,74 @@
 import React, { useEffect, useState } from "react";
 import data from "./data";
+import axios from "axios"
+
 import Board from "react-trello";
 import today from "../functions/getDate"
 import Loading from "./Loading";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Redirect } from "react-router-dom";
 
-export default function Kanban() {
 
-    const localStorage = window.localStorage.getItem("kanban")
-    const InitialData = localStorage ? JSON.parse(localStorage) : data()
-    const [kanbanSheet, setKanbanSheet] = useState(InitialData)
 
-    function getData(card, id) {
-        card["label"] = today
-        const current = kanbanSheet
-        const number = id[id.length - 1]
-        current["lanes"][number - 1]["cards"].push(card)
-        setKanbanSheet(current)
+export default function Kanban(props) {
+
+    const id = props.vals.match.params.id
+    const name = props.vals.match.params.name
+
+    const { isAuthenticated, isLoading, user } = useAuth0()
+
+    const API = `${process.env.REACT_APP_API}/${user.sub}/${id}.json`
+
+
+
+    const [kanbanSheet, setKanbanSheet] = useState({})
+    const [loader, setLoader] = useState(true)
+
+    function getData(card) {
+        setKanbanSheet(card)
+        postData({ ...card, name })
     }
 
-    function addChange(board) {
-        setKanbanSheet(board)
+    async function getKanban() {
+        const response = await axios.get(API)
+        const data = { lanes: response.data.lanes }
+        for (let i of data.lanes) {
+            if (!i.hasOwnProperty('cards')) {
+                i.cards = []
+            }
+        }
+        setKanbanSheet(data)
+        setLoader(false)
     }
 
-    useEffect(() => {
-        console.log(kanbanSheet)
-        window.localStorage.setItem("kanban", JSON.stringify(kanbanSheet))
-    }, [kanbanSheet])
+    async function postData(data) {
+        const newData = { ...data, name }
+        const response = await axios.put(API, newData)
+        console.log(response)
+    }
 
-    const { isAuthenticated, isLoading } = useAuth0()
+    useEffect(getKanban, [])
+
     return (
-        <div className="App">
-            {isLoading ? <Loading /> : isAuthenticated ? <div style={{
-                backgroundColor: '#34384c',
-                textAlign: "center"
-            }}>
-                <h1 style={{ color: "#FBF8F1", padding: "2%" }}>Kanban</h1>
-                <Board
-                    style={{
-                        backgroundColor: '#34384c',
-                        textAlign: "center",
-                        height: "100vh",
-                    }}
-                    className="d-flex justify-content-center "
-                    data={kanbanSheet}
-                    draggable
-                    laneDraggable={false}
-                    onCardAdd={(card, id) => { getData(card, id) }}
-                    onDataChange={(card) => addChange(card)}
-                    editable
-                />
-            </div> : <Redirect to="/" exact />}
-        </div>
+        < div className="App" >
+            {console.log(API)}
+            {console.log(user)}
+
+            {isLoading ? <Loading /> : isAuthenticated ? (loader ? <Loading /> : <Board
+                style={{
+                    backgroundColor: '#1572A1',
+                    textAlign: "center",
+                }}
+                className="d-flex justify-content-center align-items-center"
+                data={kanbanSheet}
+                draggable
+                laneDraggable={false}
+                editable
+                onDataChange={(data) => { getData(data) }}
+            />
+            ) : <Redirect to="/" exact />
+            }
+        </div >
     );
 }
 

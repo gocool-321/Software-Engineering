@@ -94,10 +94,11 @@ export default function DashBoard() {
 
                         <div class="d-md-flex justify-content-md-center align-items-md-center"
                             style={{ marginTop: "2rem" }}>
-                            <ul className="list-group" style={{ width: "100vh" }}>
+                            <ul className="list-group" style={{ width: "60vw" }}>
                                 {Object.keys(kanbans).map((todo) => {
-                                    return <li className="list-group-item">
-                                        <div className="container d-md-flex justify-content-evenly align-items-start align-items-md-center">
+                                    return <li className="list-group-item" style={{ width: "100%" }}>
+                                        <div className="container"
+                                            style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                             <NavLink
                                                 to={`kanban/${todo}/${kanbans[todo].name}`} >
                                                 <span>{kanbans[todo].name}</span>

@@ -20,6 +20,8 @@ export default function DashBoard() {
     const { isAuthenticated, user } = useAuth0()
     const [kanbans, setKanbans] = useState([])
     const [loading, setLoading] = useState(true)
+    const [numkanbans, setNumkanbans] = useState(0)
+    const [display, setDisplay] = useState([])
     const [formvisible, toggleForm] = useState(false)
 
     function addNewKanban() {
@@ -32,6 +34,7 @@ export default function DashBoard() {
         const Boards = await axios.get(endPoint)
         if (Boards.data) {
             setKanbans(Boards.data)
+            setNumkanbans(Object.keys(Boards.data).length)
         } else {
             setKanbans([])
         }
@@ -47,6 +50,20 @@ export default function DashBoard() {
         return Response
     }
 
+    function sortState() {
+        const sortHelper = (a, b) => {
+            if (kanbans[a].number > kanbans[b].number) {
+                return -1
+            }
+            if (kanbans[a].number < kanbans[b].number) {
+                return 1
+            }
+            return 0
+        }
+        const state = Object.keys(kanbans).sort(sortHelper)
+        return state
+        // setDisplay(state)
+    }
     async function putDataOfuser(data) {
         setLoading(true)
         const endPoint = `${API}/${user.sub}/.json`
@@ -63,20 +80,23 @@ export default function DashBoard() {
                 newState[i] = kanbans[i]
             }
         }
+        setNumkanbans(numkanbans - 1)
         setKanbans(newState)
         putDataOfuser(newState)
+        // sortState()
     }
 
     function getValueFromForm(value) {
         const newKanban = {
-            [v4()]: { name: value, ...data() }
+            [v4()]: { name: value, ...data(), number: numkanbans + 1 }
         }
+        setNumkanbans(numkanbans + 1)
         const obj = { ...kanbans, ...newKanban }
         postDataOfuser(obj)
+        // sortState()
     }
 
     useEffect(getDataOfUser, [])
-
 
     if (!isAuthenticated) return <Redirect to="/" exact />
     return <div className="parent" style={{ marginTop: "0px" }}>
@@ -96,15 +116,17 @@ export default function DashBoard() {
                             <div class="d-md-flex justify-content-md-center align-items-md-center"
                                 style={{ marginTop: "2rem" }}>
                                 <ul className="list-group" style={{ width: "60vw" }}>
-                                    {Object.keys(kanbans).map((todo) => {
-                                        return <li className="list-group-item" style={{ width: "100%" }}>
+                                    {/* {Object.keys(kanbans).map((todo) => { */}
+                                    {sortState().map((todo, idx) => {
+                                        return <li className="list-group-item" key={todo} style={{ width: "100%" }}>
                                             <div className="container"
                                                 style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
                                                 <NavLink
                                                     to={`kanban/${todo}/${kanbans[todo].name}`} >
                                                     <span>{kanbans[todo].name}</span>
                                                 </NavLink>
-                                                <button class="btn btn-danger" type="button" onClick={() => handleDelete(todo)}>
+                                                <button className="btn btn-danger" type="button" onClick={() => handleDelete(todo)}>
                                                     Delete
                                                 </button>
                                             </div>
@@ -122,6 +144,6 @@ export default function DashBoard() {
         <div className='footer'>
             <Footer />
         </div>
-    </div>
+    </div >
 
 }

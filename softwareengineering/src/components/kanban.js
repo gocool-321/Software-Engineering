@@ -16,12 +16,22 @@ export default function Kanban(props) {
 
     const { isAuthenticated, isLoading, user } = useAuth0()
 
-    const API = `${process.env.REACT_APP_API}/${user.sub}/${id}.json`
-
-
-
     const [kanbanSheet, setKanbanSheet] = useState({})
     const [loader, setLoader] = useState(true)
+    useEffect(getKanban, [])
+
+
+    var userSub = null
+    try {
+        userSub = user.sub
+    }
+    catch {
+        return <Redirect to="/dashboard" />
+    }
+    const API = `${process.env.REACT_APP_API}/${userSub}/${id}.json`
+
+    console.log(API)
+
 
     function getData(card) {
         setKanbanSheet(card)
@@ -46,7 +56,6 @@ export default function Kanban(props) {
         console.log(response)
     }
 
-    useEffect(getKanban, [])
 
     return (
         < div className="App" >
@@ -65,7 +74,6 @@ export default function Kanban(props) {
                 canAddLanes
                 editLaneTitle
                 onDataChange={(data) => { getData(data) }}
-
             />
             ) : <Redirect to="/" exact />
             }

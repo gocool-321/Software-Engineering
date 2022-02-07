@@ -5,13 +5,14 @@ export default function NewKanban({ getValueFromForm, toggleForm }) {
     const [error, raiseError] = useState(false)
     function onFormSubmit(e) {
         e.preventDefault()
-        if (state.length === 0) {
+        const trimmedString = state.trim()
+        if (trimmedString.length === 0) {
             raiseError(true)
             return
         }
         toggleForm(false)
         console.log(state)
-        getValueFromForm(state)
+        getValueFromForm(trimmedString)
     }
 
     function onFormChange(e) {

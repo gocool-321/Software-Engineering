@@ -3,7 +3,6 @@ import HomePage from './components/HomePage';
 import DashBoard from './components/DashBoard';
 import Kanban from "./components/kanban";
 import Page404 from "./components/404Page"
-import Ruff from "./components/ruff";
 
 export default function RoutePatterns() {
     return <switch>

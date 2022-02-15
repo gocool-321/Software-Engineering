@@ -30,7 +30,6 @@ export default function Kanban(props) {
     }
     const API = `${process.env.REACT_APP_API}/${userSub}/${id}.json`
 
-    console.log(API)
 
 
     function getData(card) {

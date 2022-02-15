@@ -1,23 +1,26 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import React from 'react'
 import logo from "../img/logo.svg"
-import { Navbar, Container, NavDropdown, Nav } from "react-bootstrap"
+import { Navbar, Container, Nav } from "react-bootstrap"
 import { Redirect } from 'react-router-dom'
 
 export default function NavBar() {
     const { loginWithRedirect, isAuthenticated, logout, isLoading } = useAuth0()
     return <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-            <Navbar.Brand href="#" onClick={() => <Redirect to="/" />}>
-                <img
-                    src={logo}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    alt="Todo App"
-                />{' '}
-                TODO
-            </Navbar.Brand>
+            <Nav.Link onClick={() => <Redirect to="/" />}>
+                <Navbar.Brand onClick={() => <Redirect to="/" />}>
+                    <img
+                        src={logo}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        alt="Todo App"
+                        href="#"
+                    />{' '}
+                    TODO
+                </Navbar.Brand>
+            </Nav.Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
